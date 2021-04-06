@@ -1,0 +1,31 @@
+﻿
+@model IEnumerable<LessonTypeViewModel>
+
+@{
+    ViewData["Title"] = "Lessons";
+}
+
+<h2>Lessons</h2>
+
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Lesson</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lesson in Model)
+            {
+                <tr>
+                    <td>@lesson.Name</td>
+                    <td>@lesson.Grade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="CreateNewLesson">Create new lesson</a>
+</div>

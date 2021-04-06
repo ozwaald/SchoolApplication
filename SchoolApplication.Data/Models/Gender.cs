@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SchoolApplication.Data.Models
 {
-    public enum UserType
+    public enum Gender
     {
-        Principal,
-        Teacher,
-        Student
+        Male,
+        Female
     }
 }

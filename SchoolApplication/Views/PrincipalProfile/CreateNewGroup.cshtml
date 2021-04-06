@@ -1,0 +1,36 @@
+﻿
+
+
+@model GroupViewModel
+
+@{
+    ViewData["Title"] = "New Group";
+}
+
+<form asp-action="CreateNewGroup" method="post" class="form-horizontal" role="form">
+    <h4>Add new group.</h4>
+
+    <div class="form-group">
+        <label asp-for="Grade" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="Grade" class="form-control" />
+            <span asp-validation-for="Grade" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-2 control-label">Name of lesson</label>
+        <div class="col-md-5">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Add" />
+        </div>
+    </div>
+
+</form>
+

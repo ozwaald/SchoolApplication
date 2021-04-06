@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace SchoolApplication.Data.Models
 {
-    public class Course
+    public class ScheduledLesson
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+
+        public int LessonTypeId { get; set; }
+        public LessonType LessonType { get; set; }
+
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
 
-        public List<User> Users { get; set; }
+        public int GroupId { get; set; }
+        public Group Group { get; set; }
+
+        public int TeacherId { get; set; }
+        public TeacherInfo Teacher { get; set; }
     }
 }

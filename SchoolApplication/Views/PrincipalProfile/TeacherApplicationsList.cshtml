@@ -1,0 +1,35 @@
+﻿
+
+@model IEnumerable<TeacherApplicationViewModel>
+
+@{
+    ViewData["Title"] = "Teacher Applications";
+}
+
+<h2>Teacher Applications</h2>
+
+<br />
+
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Specialization</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.FirstName</td>
+                    <td>@teacher.LastName</td>
+                    <td>@teacher.Specialization</td>
+                    <td><a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="ManageTeacherApplication" asp-route-id="@teacher.Id">Review</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
