@@ -1,3 +1,21 @@
 ﻿@{
-    Layout = "_Layout";
+
+    if (User.IsInRole("Principal"))
+    {
+        Layout = "_LayoutPrincipal";
+    }
+    else if (User.IsInRole("Teacher"))
+    {
+        Layout = "_LayoutTeacher";
+    }
+    else if (User.IsInRole("Student"))
+    {
+        Layout = "_LayoutStudent";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+
+    //Layout = "_LayoutPrincipal";
 }

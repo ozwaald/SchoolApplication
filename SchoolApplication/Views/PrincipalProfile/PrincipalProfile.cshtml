@@ -1,0 +1,44 @@
+﻿
+@model PrincipalProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Total number of students at school: @Model.StudentsCount </h3>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="StudentsList">View</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Total number of active teachers at school: @Model.TeachersCount </h3>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="TeachersList">View</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Total number of student applications: @Model.StudentsApplicationsCount </h3>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="StudentApplicationsList">View</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Total number of teacher applications: @Model.TeachersApplicationsCount </h3>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="TeacherApplicationsList">View</a>
+        </div>
+    </div>
+</div>

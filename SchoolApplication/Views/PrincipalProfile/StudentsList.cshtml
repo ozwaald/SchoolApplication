@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<StudentsListViewModel>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h2>Students</h2>
+
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Group</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FirstName</td>
+                    <td>@student.LastName</td>
+                    <td>@student.Group</td>
+                    <td><a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="StudentInfo" asp-route-id="@student.Id">Review</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

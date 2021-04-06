@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolApplication.Data.Models
+namespace SchoolApplication.Contracts.ViewModels
 {
-    public class Homework
+    public class GroupViewModel
     {
         public int Id { get; set; }
+
+        public int Grade { get; set; }
+
+        [StringLength(50)]
         public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

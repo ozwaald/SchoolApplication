@@ -1,0 +1,36 @@
+﻿
+
+
+@model IEnumerable<GroupViewModel>
+
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<h2>Groups</h2>
+
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var group in Model)
+            {
+                <tr>
+                    <td>@group.Grade @group.Name</td>
+                    <td>
+                        <a class="btn btn-primary" asp-area="" asp-controller="Week" asp-action="Index" asp-route-id="@group.Id">Review</a>
+                        <a class="btn btn-secondary" asp-area="" asp-controller="PrincipalProfile" asp-action="DeleteGroup">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="CreateNewGroup">Add new group</a>
+</div>

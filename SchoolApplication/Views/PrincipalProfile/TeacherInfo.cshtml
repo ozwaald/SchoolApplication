@@ -1,0 +1,29 @@
+﻿@model TeacherInfoViewModel
+
+@{
+    ViewData["Title"] = "Teacher info";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h3>Student: @Model.FirstName @Model.LastName</h3>
+        <br />
+        <span>Birth date: @Model.BirthDate.ToShortDateString()</span>
+        <br />
+        <span>Email: @Model.Email</span>
+        <br />
+        <span>Gender: @Model.Gender</span>
+        <br />
+        <span>Specialization: @Model.Specialization</span>
+        <br />
+        <span>
+            Group: @if (Model.Group == null)
+            {
+                <span>Not assigned</span>
+            } 
+            @Model.Group
+        </span>
+        <br />
+    </div>
+</div>
