@@ -32,7 +32,7 @@ namespace SchoolApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel viewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 IdentityRole identityRole = new IdentityRole
                 {
@@ -46,7 +46,7 @@ namespace SchoolApplication.Controllers
                     return RedirectToAction(nameof(Roles), "Administration");
                 }
 
-                foreach(IdentityError error in result.Errors)
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -122,5 +122,81 @@ namespace SchoolApplication.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditUsersInRole(string roleId)
+        {
+            ViewBag.roleId = roleId;
+
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            //if (role == userManager.IsInRoleAsync(user, roleId))
+            //{
+                
+            //}
+
+            var viewModel = new List<UserRoleViewModel>();
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    ApplicationUserId = user.Id,
+                    ApplicationUserName = user.UserName,
+                    UserFullName = user.FirstName + " " + user.LastName
+                };
+
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                viewModel.Add(userRoleViewModel);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> viewModel, string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            for (int i = 0; i < viewModel.Count; i++)
+            {
+                var user = await userManager.FindByIdAsync(viewModel[i].ApplicationUserId);
+
+                IdentityResult result = null;
+
+                if (viewModel[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!viewModel[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+                if (result.Succeeded)
+                {
+                    if (i < (viewModel.Count - 1))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditRole", new { Id = roleId });
+                    }
+                }
+            }
+
+            return RedirectToAction("EditRole", new { Id = roleId });
+        }
     }
 }

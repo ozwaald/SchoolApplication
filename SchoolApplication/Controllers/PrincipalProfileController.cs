@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SchoolApplication.Contracts.ViewModels;
 using SchoolApplication.Data;
 using SchoolApplication.Data.Models;
@@ -21,6 +22,7 @@ namespace SchoolApplication.Controllers
         private readonly SchoolDbContext dbContext;
         private readonly IMapper mapper;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IUsersCounterService usersCounter;
         private readonly ICreateLesson createLesson;
         private readonly IGetLessonsList getLessons;
@@ -35,7 +37,7 @@ namespace SchoolApplication.Controllers
         private readonly IGetTeacherInfo teacherInfo;
 
         public PrincipalProfileController(SchoolDbContext dbContext, IMapper mapper,
-                                          UserManager<ApplicationUser> userManager,
+                                          UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
                                           IUsersCounterService usersCounter, ICreateLesson createLesson, 
                                           IGetLessonsList getLessons, IGetStudentApplicationsList getStudentApplications,
                                           IGetTeacherApplicationsList getTeacherApplications, IGetGroupsList getGroups,
@@ -46,6 +48,7 @@ namespace SchoolApplication.Controllers
             this.dbContext = dbContext;
             this.mapper = mapper;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.usersCounter = usersCounter;
             this.createLesson = createLesson;
             this.getLessons = getLessons;
@@ -173,6 +176,14 @@ namespace SchoolApplication.Controllers
 
             await dbContext.SaveChangesAsync();
 
+            var stud = await dbContext.ApplicationUser.FirstOrDefaultAsync(s => s.ApplicationUserType == ApplicationUserType.Student && s.Email == student.Email);
+
+            //var role = roleManager.FindByNameAsync("Student");
+
+            await userManager.AddToRoleAsync(stud, "Student");
+
+            //await dbContext.SaveChangesAsync();
+
             return RedirectToAction(nameof(StudentApplicationsList), "PrincipalProfile");
         }
 
@@ -225,6 +236,10 @@ namespace SchoolApplication.Controllers
             dbContext.TeacherApplications.Remove(teacherApplication);
 
             await dbContext.SaveChangesAsync();
+
+            var teach = await dbContext.ApplicationUser.FirstOrDefaultAsync(s => s.ApplicationUserType == ApplicationUserType.Teacher && s.Email == teacher.Email);
+
+            await userManager.AddToRoleAsync(teach, "Teacher");
 
             return RedirectToAction(nameof(TeacherApplicationsList), "PrincipalProfile");
         }
