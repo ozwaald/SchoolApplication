@@ -10,6 +10,7 @@
 <h2>Groups</h2>
 
 <div class="table">
+
     <table>
         <thead>
             <tr>
@@ -23,8 +24,9 @@
                 <tr>
                     <td>@group.Grade @group.Name</td>
                     <td>
-                        <a class="btn btn-primary" asp-area="" asp-controller="Week" asp-action="Index" asp-route-id="@group.Id">Review</a>
-                        <a class="btn btn-secondary" asp-area="" asp-controller="PrincipalProfile" asp-action="DeleteGroup">Delete</a>
+                        <a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="GroupInfo" asp-route-id="@group.Id" asp-route-grade="@group.Grade">Review</a>
+                        @*<a class="btn btn-primary" asp-area="" asp-controller="Week" asp-action="Index" asp-route-id="@group.Id">Review</a>
+                            <a class="btn btn-secondary" asp-area="" asp-controller="PrincipalProfile" asp-action="DeleteGroup">Delete</a>*@
                     </td>
                 </tr>
             }

@@ -38,7 +38,7 @@ namespace SchoolApplication.Controllers
 
         public PrincipalProfileController(SchoolDbContext dbContext, IMapper mapper,
                                           UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-                                          IUsersCounterService usersCounter, ICreateLesson createLesson, 
+                                          IUsersCounterService usersCounter, ICreateLesson createLesson,
                                           IGetLessonsList getLessons, IGetStudentApplicationsList getStudentApplications,
                                           IGetTeacherApplicationsList getTeacherApplications, IGetGroupsList getGroups,
                                           IManageGroup manageGroup, IGetStudentsList studentsList, IGetStudentInfo studentInfo,
@@ -80,11 +80,11 @@ namespace SchoolApplication.Controllers
         public async Task<IActionResult> LessonsList()
         {
             var result = await getLessons.LessonsAsync();
-            
+
             return View(result);
         }
 
-        [HttpGet] 
+        [HttpGet]
         public IActionResult CreateNewLesson()
         {
             return View(new LessonTypeViewModel());
@@ -109,7 +109,7 @@ namespace SchoolApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> TeacherApplicationsList()
         {
-            
+
             var result = await getTeacherApplications.TeacherApplicationsAsync();
 
             return View(result);
@@ -136,6 +136,73 @@ namespace SchoolApplication.Controllers
 
             return RedirectToAction(nameof(Groups), "PrincipalProfile");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GroupInfo(int id, int grade)
+        {
+            var groupVM = new GroupViewModel();
+
+            groupVM.Id = id;
+            groupVM.Grade = grade;
+
+            foreach (var stud in await userManager.Users.Where(s => s.ApplicationUserType == ApplicationUserType.Student && s.Status == false).ToListAsync())
+            {
+                var studentViewModel = new StudentInfoViewModel
+                {
+                    Id = stud.Id,
+                    FirstName = stud.FirstName,
+                    LastName = stud.LastName,
+                    Email = stud.Email,
+                    PreviousGrade = stud.Comments,
+                    IsSelected = stud.Status
+                };
+
+                groupVM.Students.Add(studentViewModel);
+            }
+
+            ViewBag.Students = groupVM.Students.Where(s => s.PreviousGrade == groupVM.Grade.ToString()).Select(s => new SelectListItem()
+            {
+                Text = s.FirstName + " " + s.LastName + ", Previous grade: " + s.PreviousGrade,
+                Value = s.Id
+            }).ToList();
+
+            return View(groupVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GroupInfo(GroupViewModel groupVM)
+        {
+            var student = await userManager.FindByIdAsync(groupVM.StudentId);
+
+            var studentVM = new StudentInfoViewModel
+            {
+                Id = student.Id,
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                Email = student.Email,
+                PreviousGrade = student.Comments
+            };
+
+            groupVM.Students.Add(studentVM);
+
+            var studentInfo = new StudentInfo
+            {
+                ApplicationUserId = studentVM.Id,
+                GroupId = groupVM.Id,
+                IsSelected = true
+            };
+
+            var user = await userManager.FindByIdAsync(student.Id);
+
+            user.Status = true;
+            await userManager.UpdateAsync(user);
+
+            await dbContext.StudentInfos.AddAsync(studentInfo);
+            await dbContext.SaveChangesAsync();
+           
+            return RedirectToAction(nameof(GroupInfo), "PrincipalProfile");
+        }
+
 
         [HttpGet]
         public IActionResult ManageStudentApplication(int id)
@@ -167,7 +234,8 @@ namespace SchoolApplication.Controllers
                 PasswordHash = hasher.HashPassword(null, "Student70+"),
                 NormalizedUserName = studentApplication.Email.ToUpper(),
                 NormalizedEmail = studentApplication.Email.ToUpper(),
-                ApplicationUserType = ApplicationUserType.Student
+                ApplicationUserType = ApplicationUserType.Student,
+                Status = false
             };
 
             await dbContext.ApplicationUser.AddAsync(student);
@@ -228,7 +296,8 @@ namespace SchoolApplication.Controllers
                 PasswordHash = hasher.HashPassword(null, "Teacher70+"),
                 NormalizedUserName = teacherApplication.Email.ToUpper(),
                 NormalizedEmail = teacherApplication.Email.ToUpper(),
-                ApplicationUserType = ApplicationUserType.Teacher
+                ApplicationUserType = ApplicationUserType.Teacher,
+                Status = false
             };
 
             await dbContext.ApplicationUser.AddAsync(teacher);

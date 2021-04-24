@@ -9,7 +9,7 @@ namespace SchoolApplication.Contracts.ViewModels
 {
     public class StudentInfoViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 
@@ -24,6 +24,9 @@ namespace SchoolApplication.Contracts.ViewModels
         public string PreviousGrade { get; set; }
 
         public Group Group { get; set; }
+        public string GroupName { get; set; }
+
+        public bool IsSelected { get; set; }
 
     }
 }

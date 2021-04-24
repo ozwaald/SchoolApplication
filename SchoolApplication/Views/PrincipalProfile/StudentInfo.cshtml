@@ -18,11 +18,11 @@
         <span>Previous grade: @Model.PreviousGrade</span>
         <br />
         <span>
-            Group: @if (Model.Group == null)
+            Current group: @if (Model.GroupName == null)
             {
                 <span>Not assigned</span>
             } 
-            @Model.Group
+            @Model.GroupName
         </span>
         <br />
     </div>

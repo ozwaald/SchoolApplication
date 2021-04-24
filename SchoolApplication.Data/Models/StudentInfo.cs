@@ -16,5 +16,6 @@ namespace SchoolApplication.Data.Models
         public ApplicationUser ApplicationUser { get; set; }
         public int GroupId { get; set; }
         public Group Group { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

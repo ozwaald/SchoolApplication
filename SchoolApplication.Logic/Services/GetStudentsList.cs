@@ -22,11 +22,12 @@ namespace SchoolApplication.Logic.Services
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
-        public async Task<IEnumerable<StudentsListViewModel>> StudentsListAsync()
+        public async Task<IEnumerable<StudentInfoViewModel>> StudentsListAsync()
         {
             List<ApplicationUser> students = await dbContext.ApplicationUser.Where(s => s.ApplicationUserType == ApplicationUserType.Student).ToListAsync();
 
-            return mapper.Map<List<StudentsListViewModel>>(students);
+
+            return mapper.Map<List<StudentInfoViewModel>>(students);
         }
     }
 }

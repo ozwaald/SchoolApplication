@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolApplication.Contracts.ViewModels;
 using SchoolApplication.Data.Models;
 using System;
@@ -81,7 +82,7 @@ namespace SchoolApplication.Controllers
                 RoleName = role.Name
             };
 
-            foreach (var user in userManager.Users.ToList())
+            foreach (var user in await userManager.Users.ToListAsync())
             {
                 if (await userManager.IsInRoleAsync(user, role.Name))
                 {
@@ -129,20 +130,16 @@ namespace SchoolApplication.Controllers
 
             var role = await roleManager.FindByIdAsync(roleId);
 
-            //if (role == userManager.IsInRoleAsync(user, roleId))
-            //{
-                
-            //}
-
             var viewModel = new List<UserRoleViewModel>();
 
-            foreach (var user in userManager.Users.ToList())
+            foreach (var user in userManager.Users.AsEnumerable().Where(s => s.ApplicationUserType.ToString().ToUpper() == role.Name.ToString().ToUpper()).ToList())
             {
                 var userRoleViewModel = new UserRoleViewModel
                 {
                     ApplicationUserId = user.Id,
                     ApplicationUserName = user.UserName,
-                    UserFullName = user.FirstName + " " + user.LastName
+                    UserFullName = user.FirstName + " " + user.LastName + ", Class: " + user.Comments
+
                 };
 
                 if (await userManager.IsInRoleAsync(user, role.Name))

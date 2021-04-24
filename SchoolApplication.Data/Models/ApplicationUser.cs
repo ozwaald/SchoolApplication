@@ -27,6 +27,6 @@ namespace SchoolApplication.Data.Models
 
         public PrincipalInfo PrincipalInfo { get; set; }
 
-
+        public bool Status { get; set; }
     }
 }

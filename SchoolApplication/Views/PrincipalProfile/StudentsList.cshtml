@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<StudentsListViewModel>
+@model IEnumerable<StudentInfoViewModel>
 
 @{
     ViewData["Title"] = "Students";
@@ -23,7 +23,7 @@
                 <tr>
                     <td>@student.FirstName</td>
                     <td>@student.LastName</td>
-                    <td>@student.Group</td>
+                    <td>@student.GroupName</td>
                     <td><a class="btn btn-primary" asp-area="" asp-controller="PrincipalProfile" asp-action="StudentInfo" asp-route-id="@student.Id">Review</a></td>
                 </tr>
             }

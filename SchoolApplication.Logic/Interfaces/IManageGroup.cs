@@ -11,5 +11,6 @@ namespace SchoolApplication.Logic.Interfaces
     {
         Task CreateGroupAsync(GroupViewModel groupViewModel);
         Task Delete<T>(T entity) where T : class;
+        Task AddStudentAsync(List<StudentInfoViewModel> viewModel);
     }
 }

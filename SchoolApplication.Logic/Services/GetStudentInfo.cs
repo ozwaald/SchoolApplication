@@ -23,21 +23,40 @@ namespace SchoolApplication.Logic.Services
             this.mapper = mapper;
         }
 
-        public async Task<StudentInfoViewModel>StudentInfoAsync(string id)
+        public async Task<StudentInfoViewModel> StudentInfoAsync(string id)
         {
             var student = await dbContext.ApplicationUser.FirstOrDefaultAsync(s => s.ApplicationUserType == ApplicationUserType.Student && s.Id == id);
 
-            var stud = new StudentInfoViewModel
+            var groupInfo = await dbContext.StudentInfos.FirstOrDefaultAsync(stud => stud.ApplicationUserId == student.Id);
+            
+            if (groupInfo != null)
             {
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                BirthDate = student.BirthDate,
-                Email = student.Email,
-                Gender = student.Gender,
-                PreviousGrade = student.Comments
-            };
+                var group = await dbContext.Groups.FirstOrDefaultAsync(gr => gr.Id == groupInfo.GroupId);
 
-            return stud;
+                return new StudentInfoViewModel
+                {
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    BirthDate = student.BirthDate,
+                    Email = student.Email,
+                    Gender = student.Gender,
+                    PreviousGrade = student.Comments,
+                    GroupName = group.Grade + " " + group.Name
+                };
+            }
+            else
+            {
+                return new StudentInfoViewModel
+                {
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    BirthDate = student.BirthDate,
+                    Email = student.Email,
+                    Gender = student.Gender,
+                    PreviousGrade = student.Comments,
+                };
+            }
+
         }
     }
 }

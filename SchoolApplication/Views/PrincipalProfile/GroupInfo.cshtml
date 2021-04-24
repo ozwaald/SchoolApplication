@@ -1,0 +1,28 @@
+﻿
+
+@model GroupViewModel
+
+@{
+    ViewData["Title"] = "Group Info";
+}
+
+<form method="post" asp-action="GroupInfo" asp-controller="PrincipalProfile" class="form-horizontal" role="form">
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Add or remove students to current group</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="control-label">List of Students</label>
+                    <select asp-for="StudentId" class="form-control" asp-items="ViewBag.Students">
+                        <option selected disabled>Choose a student to add</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-controller="PrincipalProfile" asp-action="Groups" class="btn btn-dark">Cancel</a>
+            </div>
+        </div>
+    </form>

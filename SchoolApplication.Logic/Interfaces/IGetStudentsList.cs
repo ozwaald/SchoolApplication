@@ -9,6 +9,6 @@ namespace SchoolApplication.Logic.Interfaces
 {
     public interface IGetStudentsList
     {
-        Task<IEnumerable<StudentsListViewModel>> StudentsListAsync();
+        Task<IEnumerable<StudentInfoViewModel>> StudentsListAsync();
     }
 }
