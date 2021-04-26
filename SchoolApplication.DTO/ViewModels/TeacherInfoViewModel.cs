@@ -24,5 +24,10 @@ namespace SchoolApplication.Contracts.ViewModels
         public string Specialization { get; set; }
 
         public Group Group { get; set; }
+
+        public string GroupName { get; set; }
+
+        public bool IsSelected { get; set; }
+
     }
 }

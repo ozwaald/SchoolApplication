@@ -26,8 +26,22 @@ namespace SchoolApplication.Logic.Services
         {
             List<ApplicationUser> students = await dbContext.ApplicationUser.Where(s => s.ApplicationUserType == ApplicationUserType.Student).ToListAsync();
 
+            var map = mapper.Map<List<StudentInfoViewModel>>(students);
 
-            return mapper.Map<List<StudentInfoViewModel>>(students);
+
+            foreach (var item in map)
+            {
+                var groupInfo = await dbContext.StudentInfos.FirstOrDefaultAsync(stud => stud.ApplicationUserId == item.Id);
+
+                if (groupInfo != null)
+                {
+                    var group = await dbContext.Groups.FirstOrDefaultAsync(gr => gr.Id == groupInfo.GroupId);
+
+                    item.GroupName = group.Grade + " " + group.Name;
+                    continue;
+                }
+            }
+            return map;
         }
     }
 }

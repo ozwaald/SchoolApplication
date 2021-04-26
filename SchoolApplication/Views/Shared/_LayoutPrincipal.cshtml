@@ -12,71 +12,66 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="PrincipalProfile" asp-action="Index">School</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                
+                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <nav class="sidenav">
-        @*<div class="sidebar-header">
-            <h3>Account</h3>
-        </div>*@
-        <ul class="list-unstyled components">
-            <li>
-                <a asp-area="" asp-controller="PrincipalProfile" asp-action="Index">Home</a>
-            </li>
-            <li>
-                <a asp-area="" asp-controller="PrincipalProfile" asp-action="LessonsList">Lessons</a>
-            </li>
-            <li>
-                <a asp-area="" asp-controller="PrincipalProfile" asp-action="Groups">Groups</a>
-            </li>
-            <li>
-                <a href="#listsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lists</a>
-                <ul class="collapse list-unstyled" id="listsSubmenu">
+    <div class="d-flex" id="wrapper">
+        <div class="border-right" id="sidebar-wrapper">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="Index">Home</a>
+                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="LessonsList">Lessons</a>
+                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="Groups">Groups</a>
+                <ul class="list-unstyled components list-group-item-action">
                     <li>
-                        <a asp-area="" asp-controller="PrincipalProfile" asp-action="StudentsList">List of Students</a>
+                        <a href="#listsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action list-unstyled">Lists</a>
+                        <ul class="collapse list-unstyled" id="listsSubmenu">
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="StudentsList">List of Students</a>
+                            </li>
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="TeachersList">List of Teachers</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="PrincipalProfile" asp-action="TeachersList">List of Teachers</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#requestsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Requests</a>
-                <ul class="collapse list-unstyled" id="requestsSubmenu">
-                    <li>
-                        <a asp-area="" asp-controller="PrincipalProfile" asp-action="StudentApplicationsList">Student requests</a>
-                    </li>
-                    <li>
-                        <a asp-area="" asp-controller="PrincipalProfile" asp-action="TeacherApplicationsList">Teacher requests</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#rolesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">School roles</a>
-                <ul class="collapse list-unstyled" id="rolesSubmenu">
-                    <li>
-                        <a asp-area="" asp-controller="Administration" asp-action="CreateRole">Create role</a>
+                        <a href="#requestsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action list-unstyled">Requests</a>
+                        <ul class="collapse list-unstyled" id="requestsSubmenu">
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="StudentApplicationsList">Student requests</a>
+                            </li>
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="PrincipalProfile" asp-action="TeacherApplicationsList">Teacher requests</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Administration" asp-action="Roles">Roles</a>
+                        <a href="#rolesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action list-unstyled">School roles</a>
+                        <ul class="collapse list-unstyled" id="rolesSubmenu">
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="Administration" asp-action="CreateRole">Create role</a>
+                            </li>
+                            <li>
+                                <a class="list-group-item list-group-item-action" asp-area="" asp-controller="Administration" asp-action="Roles">Roles</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-        </ul>
-    </nav>
-    <div class="container">
-        <main id="principalmain" role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </div>
+        </div>
 
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <main id="principalmain" role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - School - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -85,6 +80,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

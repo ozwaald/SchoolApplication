@@ -18,12 +18,14 @@
         <span>Specialization: @Model.Specialization</span>
         <br />
         <span>
-            Group: @if (Model.Group == null)
+            Assigned groups: @if (Model.GroupName == null)
             {
                 <span>Not assigned</span>
-            } 
-            @Model.Group
+            }
+            @Model.GroupName
         </span>
         <br />
+        <br />
+        <a class="btn btn-dark" href='javascript:history.go(-1)'>Back</a>
     </div>
 </div>

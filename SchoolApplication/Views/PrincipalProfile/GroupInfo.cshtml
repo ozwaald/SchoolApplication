@@ -8,21 +8,77 @@
 
 <form method="post" asp-action="GroupInfo" asp-controller="PrincipalProfile" class="form-horizontal" role="form">
 
-        <div class="card">
-            <div class="card-header">
-                <h2>Add or remove students to current group</h2>
+    <div class="card">
+        <div class="card-header">
+            <h2>Group @Model.Grade @Model.Name</h2>
+        </div>
+        @if (ViewBag.Students != null && ViewBag.Students.Count > 0)
+        {
+            <div class="card-body table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in ViewBag.SelectedStudents)
+                        {
+                            <tr>
+                                <td>@student.FirstName</td>
+                                <td>@student.LastName</td>
+                                <td><a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="StudentInfo" asp-route-id="@student.Id">Review</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="card-body">
+            <div class="card-footer">
                 <div class="form-group">
-                    <label class="control-label">List of Students</label>
+                    <label class="control-label">List of available students</label>
                     <select asp-for="StudentId" class="form-control" asp-items="ViewBag.Students">
                         <option selected disabled>Choose a student to add</option>
                     </select>
                 </div>
-            </div>
-            <div class="card-footer">
                 <input type="submit" value="Update" class="btn btn-primary" />
                 <a asp-controller="PrincipalProfile" asp-action="Groups" class="btn btn-dark">Cancel</a>
             </div>
-        </div>
-    </form>
+        }
+        else
+        {
+            <div class="card-body table">
+                @if (ViewBag.SelectedStudents != null && ViewBag.SelectedStudents.Count > 0)
+                {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in ViewBag.SelectedStudents)
+                            {
+                                <tr>
+                                    <td>@student.FirstName</td>
+                                    <td>@student.LastName</td>
+                                    <td><a class="btn btn-primary" asp-controller="PrincipalProfile" asp-action="StudentInfo" asp-route-id="@student.Id">Review</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="card-body"><h4>This group is empty.</h4></div>
+                }
+            </div>
+            <div class="card-footer">
+                <h4>There are no unassigned students for this grade. <a asp-controller="PrincipalProfile" asp-action="Groups" class="btn btn-dark">Back</a></h4>
+            </div>
+        }
+    </div>
+</form>

@@ -138,14 +138,15 @@ namespace SchoolApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GroupInfo(int id, int grade)
+        public async Task<IActionResult> GroupInfo(int id, int grade, string name)
         {
             var groupVM = new GroupViewModel();
 
             groupVM.Id = id;
             groupVM.Grade = grade;
+            groupVM.Name = name;
 
-            foreach (var stud in await userManager.Users.Where(s => s.ApplicationUserType == ApplicationUserType.Student && s.Status == false).ToListAsync())
+            foreach (var stud in await userManager.Users.Where(s => s.ApplicationUserType == ApplicationUserType.Student).ToListAsync())
             {
                 var studentViewModel = new StudentInfoViewModel
                 {
@@ -160,7 +161,9 @@ namespace SchoolApplication.Controllers
                 groupVM.Students.Add(studentViewModel);
             }
 
-            ViewBag.Students = groupVM.Students.Where(s => s.PreviousGrade == groupVM.Grade.ToString()).Select(s => new SelectListItem()
+            ViewBag.SelectedStudents = groupVM.Students.Where(s => s.PreviousGrade == groupVM.Grade.ToString() && s.IsSelected == true).ToList();
+
+            ViewBag.Students = groupVM.Students.Where(s => s.PreviousGrade == groupVM.Grade.ToString() && s.IsSelected == false).Select(s => new SelectListItem()
             {
                 Text = s.FirstName + " " + s.LastName + ", Previous grade: " + s.PreviousGrade,
                 Value = s.Id
