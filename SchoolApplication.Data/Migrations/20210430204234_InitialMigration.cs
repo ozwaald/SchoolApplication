@@ -40,12 +40,13 @@ namespace SchoolApplication.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Age = table.Column<int>(nullable: true),
-                    Gender = table.Column<int>(nullable: true),
-                    ApplicationUserType = table.Column<int>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    ApplicationUserType = table.Column<int>(nullable: false),
+                    Comments = table.Column<string>(maxLength: 50, nullable: true),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,8 +59,9 @@ namespace SchoolApplication.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Grade = table.Column<int>(nullable: false)
+                    Grade = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: true),
+                    Homework = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +74,7 @@ namespace SchoolApplication.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: true),
                     Grade = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -228,7 +230,7 @@ namespace SchoolApplication.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,9 +247,8 @@ namespace SchoolApplication.Data.Migrations
                 name: "TeacherInfos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    ApplicationUserId = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,9 +267,9 @@ namespace SchoolApplication.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Homework = table.Column<string>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    GroupId = table.Column<int>(nullable: false)
+                    ApplicationUserId = table.Column<string>(maxLength: 450, nullable: true),
+                    GroupId = table.Column<int>(nullable: false),
+                    IsSelected = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -297,7 +298,8 @@ namespace SchoolApplication.Data.Migrations
                     StartTime = table.Column<TimeSpan>(nullable: false),
                     EndTime = table.Column<TimeSpan>(nullable: false),
                     GroupId = table.Column<int>(nullable: false),
-                    TeacherId = table.Column<int>(nullable: false)
+                    TeacherId = table.Column<int>(nullable: false),
+                    TeacherId1 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -315,12 +317,17 @@ namespace SchoolApplication.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ScheduledLessons_TeacherInfos_TeacherId",
-                        column: x => x.TeacherId,
+                        name: "FK_ScheduledLessons_TeacherInfos_TeacherId1",
+                        column: x => x.TeacherId1,
                         principalTable: "TeacherInfos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ApplicationUserType", "BirthDate", "Comments", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "121a155d-78cb-4b71-ae4b-3fb7b5113b00", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "745868e5-0028-4eaa-be52-ca05ee74bd63", "yahya.wpm@gmail.com", true, null, 0, null, false, null, "YAHYA.WPM@GMAIL.COM", "YAHYA.WPM@GMAIL.COM", "AQAAAAEAACcQAAAAEFrvwtGdzhJZDTyV1tlNwoDhVyTdyKRVq3BYvWph/HiN/Mo60iy6X2p4VnyoJT73vw==", null, false, "", false, false, "yahya.wpm@gmail.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -379,9 +386,9 @@ namespace SchoolApplication.Data.Migrations
                 column: "LessonTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ScheduledLessons_TeacherId",
+                name: "IX_ScheduledLessons_TeacherId1",
                 table: "ScheduledLessons",
-                column: "TeacherId");
+                column: "TeacherId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentInfos_ApplicationUserId",

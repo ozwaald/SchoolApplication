@@ -132,6 +132,10 @@ namespace SchoolApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewGroup(GroupViewModel groupViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(groupViewModel);
+            }
             await manageGroup.CreateGroupAsync(groupViewModel);
 
             return RedirectToAction(nameof(Groups), "PrincipalProfile");
@@ -303,9 +307,16 @@ namespace SchoolApplication.Controllers
                 Status = false
             };
 
+            var teacherInfo = new TeacherInfo
+            {
+                ApplicationUserId = teacher.Id
+            };
+
             await dbContext.ApplicationUser.AddAsync(teacher);
 
             dbContext.TeacherApplications.Remove(teacherApplication);
+
+            await dbContext.TeacherInfos.AddAsync(teacherInfo);
 
             await dbContext.SaveChangesAsync();
 

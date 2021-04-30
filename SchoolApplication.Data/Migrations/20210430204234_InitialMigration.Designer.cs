@@ -10,8 +10,8 @@ using SchoolApplication.Data;
 namespace SchoolApplication.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20210317164537_ModelsUpdate1.3")]
-    partial class ModelsUpdate13
+    [Migration("20210430204234_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -218,6 +218,9 @@ namespace SchoolApplication.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -240,20 +243,21 @@ namespace SchoolApplication.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f9aee0ab-02ab-4e3f-a5c2-a268dc636d3f",
+                            Id = "121a155d-78cb-4b71-ae4b-3fb7b5113b00",
                             AccessFailedCount = 0,
                             ApplicationUserType = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "bb4df6a2-390c-4c7e-ac1e-02a8fc8ab7b0",
+                            ConcurrencyStamp = "745868e5-0028-4eaa-be52-ca05ee74bd63",
                             Email = "yahya.wpm@gmail.com",
                             EmailConfirmed = true,
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "YAHYA.WPM@GMAIL.COM",
                             NormalizedUserName = "YAHYA.WPM@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM7d992rLj8VNGiGlac3TqSdEnpLZw4CoXdMvual/BTyEyeDOP8jaA54SZvxxbFTgQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFrvwtGdzhJZDTyV1tlNwoDhVyTdyKRVq3BYvWph/HiN/Mo60iy6X2p4VnyoJT73vw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
+                            Status = false,
                             TwoFactorEnabled = false,
                             UserName = "yahya.wpm@gmail.com"
                         });
@@ -343,13 +347,16 @@ namespace SchoolApplication.Data.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TeacherId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("LessonTypeId");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherId1");
 
                     b.ToTable("ScheduledLessons");
                 });
@@ -404,6 +411,9 @@ namespace SchoolApplication.Data.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId")
@@ -455,10 +465,9 @@ namespace SchoolApplication.Data.Migrations
 
             modelBuilder.Entity("SchoolApplication.Data.Models.TeacherInfo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)")
@@ -547,9 +556,7 @@ namespace SchoolApplication.Data.Migrations
 
                     b.HasOne("SchoolApplication.Data.Models.TeacherInfo", "Teacher")
                         .WithMany("Lessons")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId1");
                 });
 
             modelBuilder.Entity("SchoolApplication.Data.Models.StudentInfo", b =>
