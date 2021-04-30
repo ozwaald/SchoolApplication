@@ -327,7 +327,7 @@ namespace SchoolApplication.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ApplicationUserType", "BirthDate", "Comments", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "121a155d-78cb-4b71-ae4b-3fb7b5113b00", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "745868e5-0028-4eaa-be52-ca05ee74bd63", "yahya.wpm@gmail.com", true, null, 0, null, false, null, "YAHYA.WPM@GMAIL.COM", "YAHYA.WPM@GMAIL.COM", "AQAAAAEAACcQAAAAEFrvwtGdzhJZDTyV1tlNwoDhVyTdyKRVq3BYvWph/HiN/Mo60iy6X2p4VnyoJT73vw==", null, false, "", false, false, "yahya.wpm@gmail.com" });
+                values: new object[] { "f48419c7-84b3-47c8-924c-953003897954", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "8e757b77-1151-4276-930b-ba089ac0d63e", "yahya.wpm@gmail.com", true, null, 0, null, false, null, "YAHYA.WPM@GMAIL.COM", "YAHYA.WPM@GMAIL.COM", "AQAAAAEAACcQAAAAELIe7JUd9/xHb2dN/v4omsi1dxh1f9k9Zs+05y7XHOfU52a0XRwu73gOR8taceJSgw==", null, false, "", false, false, "yahya.wpm@gmail.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

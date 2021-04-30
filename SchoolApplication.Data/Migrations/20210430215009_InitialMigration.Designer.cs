@@ -10,7 +10,7 @@ using SchoolApplication.Data;
 namespace SchoolApplication.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20210430204234_InitialMigration")]
+    [Migration("20210430215009_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,18 +243,18 @@ namespace SchoolApplication.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "121a155d-78cb-4b71-ae4b-3fb7b5113b00",
+                            Id = "f48419c7-84b3-47c8-924c-953003897954",
                             AccessFailedCount = 0,
                             ApplicationUserType = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "745868e5-0028-4eaa-be52-ca05ee74bd63",
+                            ConcurrencyStamp = "8e757b77-1151-4276-930b-ba089ac0d63e",
                             Email = "yahya.wpm@gmail.com",
                             EmailConfirmed = true,
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "YAHYA.WPM@GMAIL.COM",
                             NormalizedUserName = "YAHYA.WPM@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFrvwtGdzhJZDTyV1tlNwoDhVyTdyKRVq3BYvWph/HiN/Mo60iy6X2p4VnyoJT73vw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELIe7JUd9/xHb2dN/v4omsi1dxh1f9k9Zs+05y7XHOfU52a0XRwu73gOR8taceJSgw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = false,
