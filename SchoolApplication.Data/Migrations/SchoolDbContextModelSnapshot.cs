@@ -241,18 +241,18 @@ namespace SchoolApplication.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f48419c7-84b3-47c8-924c-953003897954",
+                            Id = "7ae97879-15d0-432a-aef4-957dd6436e09",
                             AccessFailedCount = 0,
                             ApplicationUserType = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "8e757b77-1151-4276-930b-ba089ac0d63e",
+                            ConcurrencyStamp = "f54e8a87-6645-48a3-90c7-88b407109b61",
                             Email = "yahya.wpm@gmail.com",
                             EmailConfirmed = true,
                             Gender = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "YAHYA.WPM@GMAIL.COM",
                             NormalizedUserName = "YAHYA.WPM@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELIe7JUd9/xHb2dN/v4omsi1dxh1f9k9Zs+05y7XHOfU52a0XRwu73gOR8taceJSgw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN1mzCPEpctDtpEYO+dSyE52fGV5+Ytf091H+g2nIwROX4loByYiN/h9ZJBEgchEow==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = false,
@@ -345,16 +345,13 @@ namespace SchoolApplication.Data.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TeacherId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("LessonTypeId");
 
-                    b.HasIndex("TeacherId1");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("ScheduledLessons");
                 });
@@ -463,9 +460,10 @@ namespace SchoolApplication.Data.Migrations
 
             modelBuilder.Entity("SchoolApplication.Data.Models.TeacherInfo", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasMaxLength(450);
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)")
@@ -554,7 +552,9 @@ namespace SchoolApplication.Data.Migrations
 
                     b.HasOne("SchoolApplication.Data.Models.TeacherInfo", "Teacher")
                         .WithMany("Lessons")
-                        .HasForeignKey("TeacherId1");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SchoolApplication.Data.Models.StudentInfo", b =>

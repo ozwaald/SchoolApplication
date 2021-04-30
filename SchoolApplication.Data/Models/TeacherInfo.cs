@@ -9,8 +9,7 @@ namespace SchoolApplication.Data.Models
 {
     public class TeacherInfo
     {
-        [StringLength(450)]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(450)]
         public string ApplicationUserId { get; set; }

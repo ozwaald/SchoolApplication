@@ -247,7 +247,8 @@ namespace SchoolApplication.Data.Migrations
                 name: "TeacherInfos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ApplicationUserId = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
@@ -298,8 +299,7 @@ namespace SchoolApplication.Data.Migrations
                     StartTime = table.Column<TimeSpan>(nullable: false),
                     EndTime = table.Column<TimeSpan>(nullable: false),
                     GroupId = table.Column<int>(nullable: false),
-                    TeacherId = table.Column<int>(nullable: false),
-                    TeacherId1 = table.Column<string>(nullable: true)
+                    TeacherId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -317,17 +317,17 @@ namespace SchoolApplication.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ScheduledLessons_TeacherInfos_TeacherId1",
-                        column: x => x.TeacherId1,
+                        name: "FK_ScheduledLessons_TeacherInfos_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "TeacherInfos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ApplicationUserType", "BirthDate", "Comments", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "f48419c7-84b3-47c8-924c-953003897954", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "8e757b77-1151-4276-930b-ba089ac0d63e", "yahya.wpm@gmail.com", true, null, 0, null, false, null, "YAHYA.WPM@GMAIL.COM", "YAHYA.WPM@GMAIL.COM", "AQAAAAEAACcQAAAAELIe7JUd9/xHb2dN/v4omsi1dxh1f9k9Zs+05y7XHOfU52a0XRwu73gOR8taceJSgw==", null, false, "", false, false, "yahya.wpm@gmail.com" });
+                values: new object[] { "7ae97879-15d0-432a-aef4-957dd6436e09", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "f54e8a87-6645-48a3-90c7-88b407109b61", "yahya.wpm@gmail.com", true, null, 0, null, false, null, "YAHYA.WPM@GMAIL.COM", "YAHYA.WPM@GMAIL.COM", "AQAAAAEAACcQAAAAEN1mzCPEpctDtpEYO+dSyE52fGV5+Ytf091H+g2nIwROX4loByYiN/h9ZJBEgchEow==", null, false, "", false, false, "yahya.wpm@gmail.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -386,9 +386,9 @@ namespace SchoolApplication.Data.Migrations
                 column: "LessonTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ScheduledLessons_TeacherId1",
+                name: "IX_ScheduledLessons_TeacherId",
                 table: "ScheduledLessons",
-                column: "TeacherId1");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentInfos_ApplicationUserId",
