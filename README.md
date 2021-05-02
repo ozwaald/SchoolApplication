@@ -1,6 +1,6 @@
 # SchoolApplication
 
-## Web application created on MVC template.
+Web application created on MVC template.
 Main functionalities:
 - Have 4 main roles: Principal of the school, Teachers, Students, Appliers/Viewers.
 
