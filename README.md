@@ -27,3 +27,5 @@ School children can:
 - View homework
 
 All data is stored in SQL database (local)
+
+## The application is finished for 70%.
